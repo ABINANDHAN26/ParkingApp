@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "796371082645",
+    "firebase_url": "https://as0005-1e1db-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "as0005-1e1db",
+    "storage_bucket": "as0005-1e1db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796371082645:android:657f8c8acb9024fc736a9c",
+        "android_client_info": {
+          "package_name": "com.kads.android.parkingtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796371082645-brtbd9tmjk3clc1ham5lfk76nfqm0l5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kads.android.parkingtracker",
+            "certificate_hash": "c4b8c28e690d65457ad8bff9b636a5e935ef4a77"
+          }
+        },
+        {
+          "client_id": "796371082645-33odg6b2onqksi8ec9o16sa45u064b4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTS5GPZI2gWLKVSFErLm34CSMkMUo18_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796371082645-33odg6b2onqksi8ec9o16sa45u064b4q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

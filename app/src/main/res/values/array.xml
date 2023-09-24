@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cityArray">
+        <item>Chennai</item>
+        <item>Bangalore</item>
+        <item>Coimbatore</item>
+        <item>Delhi</item>
+        <item>Kochi</item>
+    </string-array>
+    <string-array name="carName">
+        <item>TATA</item>
+        <item>Toyota</item>
+        <item>Mahindra</item>
+        <item>Volkswagon</item>
+        <item>Ford</item>
+        <item>Kia</item>
+        <item>Renault</item>
+    </string-array>
+    <string-array name="paymentMethod">
+        <item>Cash</item>
+        <item>Card</item>
+        <item>UPI</item>
+    </string-array>
+    <string-array name="lots">
+        <item>Parking 1</item>
+        <item>Parking 2</item>
+<!--        <item>C</item>-->
+<!--        <item>D</item>-->
+<!--        <item>E</item>-->
+    </string-array>
+    <string-array name="spots">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="carColor">
+        <item>Red</item>
+        <item>Black</item>
+        <item>White</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+    </string-array>
+</resources>
