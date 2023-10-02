@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.PackageManager;
@@ -18,12 +19,19 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,11 +39,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.kads.android.parkingtracker.Model.User;
 import com.kads.android.parkingtracker.R;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -66,7 +81,7 @@ public class AddParkingActivity extends AppCompatActivity implements View.OnClic
     String status;
     Uri uri;
 
-
+    ArrayList<String> parkingNameList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +89,8 @@ public class AddParkingActivity extends AppCompatActivity implements View.OnClic
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        getParkingNames();
 
         email = findViewById(R.id.parkingTxtEmailData);
         carPlate = findViewById(R.id.parkingTxtCarNoData);
@@ -331,6 +348,50 @@ public class AddParkingActivity extends AppCompatActivity implements View.OnClic
         return isDataTrue;
     }
 
+
+    public void getParkingNames(){
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        firestore.collection("Location")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.contains("ParkingName")) {
+                                    String title = (String) document.get("ParkingName");
+                                    parkingNameList.add(title);
+                                }
+                            }
+
+                        }
+                        taskFailed();
+                        setSpinnerValues();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                      taskFailed();
+                      setSpinnerValues();
+                    }
+                });
+    }
+
+    public void taskFailed(){
+        parkingNameList.add("Parking 1");
+        parkingNameList.add("Parking 2");
+        parkingNameList.add("CMRL Parking");
+        parkingNameList.add("Sri JP parking");
+        parkingNameList.add("Shivaji Parking");
+
+
+    }
+
+    public void setSpinnerValues(){
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, parkingNameList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lotNumber.setAdapter(arrayAdapter);
+    }
 
     void extractData() {
         strEmail = email.getText().toString();

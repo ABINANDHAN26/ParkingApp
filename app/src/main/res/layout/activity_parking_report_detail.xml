@@ -290,6 +290,15 @@
             android:id="@+id/is_paid_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/paid_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Paid"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:layout_weight="1"/>
 

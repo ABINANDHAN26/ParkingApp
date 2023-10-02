@@ -12,6 +12,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.kads.android.parkingtracker.Model.Receipt;
 import com.kads.android.parkingtracker.R;
 
@@ -20,7 +27,7 @@ public class ParkingReportDetailActivity extends AppCompatActivity {
     private TextView txtViewEmail, txtViewCarPlate, txtViewCompany, txtViewColor, txtViewHours, txtViewDateTime, txtViewLot, txtViewSpot, txtViewPayment, txtViewAmount,txtViewIsPaid;
     Receipt receipt = new Receipt();
     String GOOGLE_PAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user";
-    Button payBtn;
+    Button payBtn,paidBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +47,7 @@ public class ParkingReportDetailActivity extends AppCompatActivity {
         txtViewAmount = findViewById(R.id.textViewAmount);
         txtViewIsPaid = findViewById(R.id.is_paid_tv);
         payBtn = findViewById(R.id.payBtn);
+        paidBtn = findViewById(R.id.paid_btn);
 
         Intent intent = getIntent();
         receipt = (Receipt) intent.getSerializableExtra("receipt");
@@ -55,6 +63,10 @@ public class ParkingReportDetailActivity extends AppCompatActivity {
         txtViewPayment.setText(receipt.getPaymentMethod());
         txtViewAmount.setText(receipt.getPaymentAmount());
         txtViewIsPaid.setText(receipt.getIsPaid());
+        if(receipt.getIsPaid().equals("Paid")){
+            paidBtn.setVisibility(View.GONE);
+            payBtn.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -69,6 +81,59 @@ public class ParkingReportDetailActivity extends AppCompatActivity {
             openGooglePay();
 
         });
+
+        paidBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(receipt.getIsPaid().equals("Not Paid")) {
+                    txtViewIsPaid.setText("Paid");
+                    updateValue();
+                }
+            }
+        });
+    }
+
+
+    private void updateValue(){
+        String userId = FirebaseAuth.getInstance().getUid(); // Replace with the actual user ID
+        String desiredTimestamp = receipt.getDateTime(); // Replace with the desired timestamp
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference receiptRef = database.getReference("parkingReceipt").child(userId);
+
+// Create a query to find the node with the desired timestamp
+        Query query = receiptRef.orderByChild("dateTime").equalTo(desiredTimestamp);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // This loop will iterate over nodes with matching timestamps (should be just one)
+                    DatabaseReference nodeRef = snapshot.getRef();
+                    nodeRef.child("isPaid").setValue("Paid", new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if (databaseError == null) {
+                                // Update successful
+                                txtViewIsPaid.setText("Paid");
+                                paidBtn.setVisibility(View.GONE);
+                                payBtn.setVisibility(View.GONE);
+
+                            } else {
+                                // Update failed
+                                // Handle the error
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle the error
+            }
+        });
+
     }
 
     private void openGooglePay() {
