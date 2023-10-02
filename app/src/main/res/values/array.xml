@@ -17,16 +17,15 @@
         <item>Renault</item>
     </string-array>
     <string-array name="paymentMethod">
-        <item>Cash</item>
         <item>Card</item>
         <item>UPI</item>
     </string-array>
     <string-array name="lots">
         <item>Parking 1</item>
         <item>Parking 2</item>
-<!--        <item>C</item>-->
-<!--        <item>D</item>-->
-<!--        <item>E</item>-->
+        <item>Shivaji Parking</item>
+        <item>CMRL Parking</item>
+        <item>Sri JP Parking</item>
     </string-array>
     <string-array name="spots">
         <item>1</item>
@@ -34,6 +33,10 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+    </string-array>
+    <string-array name="payment">
+        <item>Not Paid</item>
+        <item>Paid</item>
     </string-array>
     <string-array name="carColor">
         <item>Red</item>

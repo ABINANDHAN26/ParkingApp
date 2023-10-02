@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent paymentIntent = new Intent(HomeActivity.this, ParkingActivity.class);
+                Intent paymentIntent = new Intent(HomeActivity.this, AddParkingActivity.class);
                 startActivity(paymentIntent);
             }
         });
@@ -105,12 +105,15 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_payment_receipt) {
-            Intent paymentIntent = new Intent(HomeActivity.this, ParkingActivity.class);
+            Intent paymentIntent = new Intent(HomeActivity.this, AddParkingActivity.class);
             startActivity(paymentIntent);
 
         } else if (id == R.id.nav_location) {
             Intent locationIntent = new Intent(HomeActivity.this, LocationActivity.class);
-           // startActivity(locationIntent);
+            startActivity(locationIntent);
+        } else if (id == R.id.nav_add_location) {
+            Intent locationIntent = new Intent(HomeActivity.this, AddLocationActivity.class);
+            startActivity(locationIntent);
 
         } else if (id == R.id.nav_parking_manual) {
             Intent manualIntent = new Intent(HomeActivity.this, ManualActivity.class);

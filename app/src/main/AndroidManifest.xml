@@ -4,7 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.gms.permission.TRANSACTION_FICTIONAL" />
+
+    <queries>
+        <package android:name="com.google.android.apps.nbu.paisa.user" />
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -13,7 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.kads.android.parkingtracker.Activity.SplashActivity"
+        <activity
+            android:name=".Activity.AddLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kads.android.parkingtracker.Activity.LoginActivity" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.RegisterActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.RegisterActivity" />
         <activity
-            android:name="com.kads.android.parkingtracker.Activity.HomeActivity"
+            android:name=".Activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
 
@@ -32,22 +41,23 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name="com.kads.android.parkingtracker.Activity.ManualActivity" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.SupportActivity" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.ProfileActivity" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.ParkingActivity" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.ParkingReceiptActivity" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.ParkingReportActivity" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.ParkingReportDetailActivity" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.EditProfileActivity" />
-<!--        <meta-data-->
-<!--            android:name="com.google.android.geo.API_KEY"-->
-<!--            android:value="AIzaSyBtAubRGSlTZanGLTPT3JrKWsRCFAXZzrE" />-->
+        <activity android:name=".Activity.ManualActivity" />
+        <activity android:name=".Activity.SupportActivity" />
+        <activity android:name=".Activity.ProfileActivity" />
+        <activity android:name=".Activity.AddParkingActivity" />
+        <activity android:name=".Activity.ParkingReceiptActivity" />
+        <activity android:name=".Activity.ParkingReportActivity" />
+        <activity android:name=".Activity.ParkingReportDetailActivity" />
+        <activity android:name=".Activity.EditProfileActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBtAubRGSlTZanGLTPT3JrKWsRCFAXZzrE" />
 
         <activity
-            android:name="com.kads.android.parkingtracker.Activity.LocationActivity"
+            android:name=".Activity.LocationActivity"
             android:label="@string/title_activity_location" />
-        <activity android:name="com.kads.android.parkingtracker.Activity.GoogleSignInExtraActivity"></activity>
+        <activity android:name=".Activity.GoogleSignInExtraActivity" />
     </application>
 
 </manifest>

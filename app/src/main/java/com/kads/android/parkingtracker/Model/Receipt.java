@@ -15,8 +15,12 @@ public class Receipt implements Serializable {
     private String paymentAmount;
     private String paymentMethod;
     private String spotNo;
+    private String isPaid;
 
-    public Receipt(String carColor, String carCompany, String carNo, String dateTime, String email, String lotNo, String noOfHours,String priceHour, String paymentAmount, String paymentMethod, String spotNo) {
+    public Receipt() {
+    }
+
+    public Receipt(String carColor, String carCompany, String carNo, String dateTime, String email, String lotNo, String noOfHours, String priceHour, String paymentAmount, String paymentMethod, String spotNo, String isPaid) {
         this.carColor = carColor;
         this.carCompany = carCompany;
         this.carNo = carNo;
@@ -28,11 +32,9 @@ public class Receipt implements Serializable {
         this.paymentAmount = paymentAmount;
         this.paymentMethod = paymentMethod;
         this.spotNo = spotNo;
+        this.isPaid = isPaid;
     }
 
-    public Receipt() {
-
-    }
 
     public String getCarColor() {
         return carColor;
@@ -120,5 +122,13 @@ public class Receipt implements Serializable {
 
     public void setSpotNo(String spotNo) {
         this.spotNo = spotNo;
+    }
+
+    public String getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(String isPaid) {
+        this.isPaid = isPaid;
     }
 }

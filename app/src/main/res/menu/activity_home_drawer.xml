@@ -13,6 +13,10 @@
             android:icon="@drawable/locationicon"
             android:title="Parking Location" />
         <item
+            android:id="@+id/nav_add_location"
+            android:icon="@drawable/locationicon"
+            android:title="Add Parking Location" />
+        <item
             android:id="@+id/nav_parking_manual"
             android:icon="@drawable/parkingmanualicon"
             android:title="Parking Manual" />

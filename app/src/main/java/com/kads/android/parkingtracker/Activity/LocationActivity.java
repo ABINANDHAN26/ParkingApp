@@ -20,6 +20,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.kads.android.parkingtracker.R;
 
 public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -40,6 +44,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
+    String TAG  = "TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +77,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 //        mMap.addMarker(new MarkerOptions().position(lambton).title("Marker in lambton"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(lambton));
 
-        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
 
         //get the location permission
         getLocationPermission();
@@ -142,6 +148,8 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,DEFAULT_ZOOM));
                             mMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
 
+                            showLocation();
+
 
                             LatLng spotA = new LatLng(13.066687413544324, 80.11273097666813);
                             mMap.addMarker(new MarkerOptions().position(spotA).title("Parking 1").snippet("").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
@@ -175,4 +183,31 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             Log.e("Exception: %s", e.getMessage());
         }
     }
-}
+
+    public void showLocation() {
+        FirebaseFirestore cloudstorage = FirebaseFirestore.getInstance();
+        cloudstorage.collection("Location")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());//
+                                if (document.contains("Location") && document.contains("ParkingName")) {
+                                    GeoPoint location = (GeoPoint) document.get("Location");
+                                    String title = (String) document.get("ParkingName");
+                                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                        mMap.addMarker(new MarkerOptions().position(latLng).title(title).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Error fetching data: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    }

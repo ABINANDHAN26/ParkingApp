@@ -33,8 +33,8 @@
     <string name="AmountHeader">Amount</string>
     <string name="DateAndTImeHeader">Date and Time</string>
     <string name="PaymentModeHeader">Payment Mode</string>
-    <string name="LotHeader">Lot Number</string>
-    <string name="SpotHeader">Spot Number</string>
+    <string name="LotHeader">Parking Name</string>
+    <string name="SpotHeader">Lot Number</string>
     <string name="ReceiptHeader">PARKING PAYMENT RECEIPT</string>
     <string name="ReportHeader">PARKING REPORT</string>
     <string name="ReportDetailHeader">DETAIL PARKING PAYMENT</string>
